@@ -3,14 +3,15 @@
 void allocateTasks(int taskTotal, int maxIteration, TaskParameter* parameterList)
 {
     int increment = (int) ceil(maxIteration/taskTotal);
-    int index = 0, startValue = 2, endValue = startValue + increment -1;
+    int index = 0, startValue = 2; 
+    int endValue = taskTotal == 1? maxIteration: startValue + increment -1;
     setRange(&parameterList[index], startValue, endValue);
     openFiles(&parameterList[index], startValue, endValue);
-    index++;
     if(taskTotal == 1)
     {
         return;
     }
+    ++index;
     for(; index < taskTotal-1; ++index)
     {
         startValue = ++endValue;
