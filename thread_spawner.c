@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include <sys/wait.h>
+#include <pthread.h>
 #include "primedecompose.h"
 #include "task_parameter.h"
 
@@ -10,12 +10,10 @@
 
 int main(int argc, char** argv)
 {
-    pid_t childpid = 0;
-    pid_t* childList;
     int opt;
     int taskTotal = 5, iterationMax = 10000;
     TaskParameter* parameterList = NULL;
-
+    pthread_t* threadList = NULL;
     while( (opt = getopt(argc, argv, OPTIONS)) != -1)
     {
         switch (opt)
@@ -34,30 +32,23 @@ int main(int argc, char** argv)
     }
 
     parameterList = malloc(sizeof(TaskParameter) * taskTotal);
-    childList = malloc(sizeof(pid_t) * (taskTotal - 1));
+    threadList = malloc(sizeof(pthread_t) * (taskTotal - 1));
+
 
     allocateTasks(taskTotal, iterationMax, parameterList);
 
     for(int i = 1; i < taskTotal; ++i)
     {
-        childpid = fork();
-        if(childpid == 0)
-        {
-            decomposeTask(&parameterList[i]);
-            return 0;
-        }
-        else
-        {
-            childList[i-1] = childpid;
-        }
+        pthread_create(&threadList[i-1], NULL, decomposeTask, (void*)&parameterList[i]);
     }
     decomposeTask(&parameterList[0]);
     for(int i = 0; i < taskTotal - 1; ++i)
     {
-        waitpid(childList[i], NULL, 0);
+        pthread_join(threadList[i], NULL);
     }
 
-    free(childList);
+
     free(parameterList);
+    free(threadList);
     return 0;
 }

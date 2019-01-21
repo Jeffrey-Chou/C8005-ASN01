@@ -6,6 +6,6 @@
 #include <sys/time.h>
 #include "task_parameter.h"
 
-void decomposeTask(TaskParameter* paramter);
+void* decomposeTask(void* parameter);
 int decompose(mpz_t n, mpz_t *o);
 #endif
