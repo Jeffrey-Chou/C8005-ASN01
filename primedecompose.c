@@ -1,8 +1,9 @@
 #include "primedecompose.h"
 
 #define MAX_FACTORS	1024
-void decomposeTask(TaskParameter* parameter)
+void* decomposeTask(void* taskparameter)
 {
+	TaskParameter* parameter = (TaskParameter*) taskparameter;
 	mpz_t dest[MAX_FACTORS];
 	mpz_t n;
   	int i,j, l;
@@ -29,6 +30,7 @@ void decomposeTask(TaskParameter* parameter)
 	elapsedTime = (end.tv_sec - start.tv_sec) * 1000;
 	elapsedTime += (end.tv_usec - start.tv_usec) / 1000;
 	fprintf(parameter->debugFile, "Time elapsed: %f msec\n", elapsedTime);
+	return NULL;
 
 }
 
