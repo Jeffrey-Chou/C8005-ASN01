@@ -37,7 +37,7 @@ void openFiles(TaskParameter* parameter, int start, int end)
     sprintf(fileName, "Task %d-%d.txt", start, end);
     parameter->outputFile = fopen(fileName, "w");
     sprintf(fileName, "Debug %d-%d.txt", start, end);
-    parameter->debugFile = fopen(fileName, "w");
+    parameter->debugFile = fopen(fileName, "a");
 }
 void closeFiles(TaskParameter* parameter)
 {

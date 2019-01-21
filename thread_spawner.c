@@ -11,7 +11,7 @@
 int main(int argc, char** argv)
 {
     int opt;
-    int taskTotal = 5, iterationMax = 10000;
+    int taskTotal = 1, iterationMax = 10000;
     TaskParameter* parameterList = NULL;
     int testNumber;
     pthread_t* threadList = NULL;
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
         }
     }
     sprintf(fileName,"ThreadTest-%dTasks-%dMax-TestNo%d.txt", taskTotal, iterationMax, testNumber);
-    testFile = fopen(fileName, "w");
+    testFile = fopen(fileName, "a");
     parameterList = malloc(sizeof(TaskParameter) * taskTotal);
     threadList = malloc(sizeof(pthread_t) * (taskTotal - 1));
 
