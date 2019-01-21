@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     pid_t* childList;
     int opt;
     int testNumber = 0;
-    int taskTotal = 5, iterationMax = 10000;
+    int taskTotal = 1, iterationMax = 10000;
     TaskParameter* parameterList = NULL;
     FILE* testFile;
     char fileName[64];
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
         }
     }
     sprintf(fileName,"ProcessTest-%dTasks-%dMax-TestNo%d.txt", taskTotal, iterationMax, testNumber);
-    testFile = fopen(fileName, "w");
+    testFile = fopen(fileName, "a");
     parameterList = malloc(sizeof(TaskParameter) * taskTotal);
     childList = malloc(sizeof(pid_t) * (taskTotal - 1));
 
