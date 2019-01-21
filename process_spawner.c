@@ -6,12 +6,34 @@
 #include "primedecompose.h"
 #include "task_parameter.h"
 
+#define OPTIONS "?t:i:"
+
 int main(int argc, char** argv)
 {
     pid_t childpid = 0;
     pid_t* childList;
-    int taskTotal = 8, iterationMax = 100;
-    TaskParameter* parameterList = malloc(sizeof(TaskParameter) * taskTotal);
+    int opt;
+    int taskTotal = 5, iterationMax = 10000;
+    TaskParameter* parameterList = NULL;
+
+    while( (opt = getopt(argc, argv, OPTIONS)) != -1)
+    {
+        switch (opt)
+        {
+            case 't':
+                taskTotal = atoi(optarg);
+                break;
+            case 'i':
+                iterationMax = atoi(optarg);
+                break;
+            default:
+                fprintf(stderr, "Supported arguments are -t number and -i number\n");
+                return 1;
+
+        }
+    }
+
+    parameterList = malloc(sizeof(TaskParameter) * taskTotal);
     childList = malloc(sizeof(pid_t) * taskTotal - 1);
 
     allocateTasks(taskTotal, iterationMax, parameterList);
