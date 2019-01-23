@@ -13,7 +13,7 @@ int main(int argc, char** argv)
     int opt;
     int taskTotal = 1, iterationMax = 10000;
     TaskParameter* parameterList = NULL;
-    int testNumber;
+    int testNumber = 0;
     pthread_t* threadList = NULL;
     FILE* testFile;
     char fileName[64];
